@@ -1,9 +1,10 @@
-"""Restaurant rating lister."""
+import random
+
 scores = open("scores.txt", "r")
 scores = scores.readlines()
 scores.sort()
 
-user_input = input("Please type the response of what you would like to do:\nSee restaurants and ratings: Type (a)\nAdd a restauarant and rating: Type(b)\nQuit: Type (x)\nWhat would like to do?\n")
+user_input = ""
 
 dictionary = {}
 
@@ -17,7 +18,7 @@ def view():
     
 def add():
     print("We would love for you to rate a new restaurant for our list!")
-    new_restaurant = str(input("Restarant Name\n"))
+    new_restaurant = str(input("Restarant Name\n")).capitalize()
 
     new_rating = 0
 
@@ -25,7 +26,7 @@ def add():
         new_rating = int(input("Restaurant Rating\n"))
         if new_rating < 1 or new_rating > 5:
             print("Please use a number from 1 to 5")
-    print(dictionary)
+    # print(dictionary)
     dictionary[new_restaurant] = new_rating
 
     sorted_dictionary = {}
@@ -35,13 +36,28 @@ def add():
     for i in sorted_dictionary:
         print(i,"is rated at", sorted_dictionary[i])
 
+def update():
+    num = random.randrange(0,len(dictionary))
+    new_value = list(dictionary.items())
+    rating = new_value[num]
+    new_rating = int(input("Please input new restaurant rating.\n"))
+    #still working on this section to be able to update the rating.
+
 def cancel():
     exit()
     
-
-if user_input == "a":
-    view()
-if user_input == "b":
-    add()
-if user_input == "x":
-    cancel()
+while user_input != "quit":
+    user_input = input("Please type the response of what you would like to do:\nSee restaurants and ratings: see\n"
+        "Add a restauarant and rating: add\n"
+        "Update a random restaurant rating: update\n"
+        "Quit: quit\n"
+        "What would you like to do?\n")
+    
+    if user_input == "see":
+        view()
+    if user_input == "add":
+        add()
+    if user_input == "update":
+        update()
+    if user_input == "quit":
+        cancel()
